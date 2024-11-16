@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const cylinder = document.querySelector(".cylinder");
     const rabbit = document.querySelector(".rabbit");
     const bird = document.querySelector(".bird");
-    
+    const trigger = document.querySelector(".trigger");    
 
     let isCurtainClicked = false;
     let isLightOn = false;
@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
             isCurtainClicked = true;
             curtain.style.transition = "transform 1s ease-in-out";
             curtain.style.transform = "translateY(-100%)";
+
             light.style.transition = "opacity 0.1s ease-in-out, transform 0.1s ease-in-out";
             light.style.opacity = "0";
             witch.style.transition = "opacity 0.1s ease-in-out, transform 0.1s ease-in-out";
@@ -41,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
             rabbit.style.opacity = "0";
             bird.style.transition = "opacity 0.1s ease-in-out, transform 0.1s ease-in-out";
             bird.style.opacity = "0";
-    }
-});
+        }
+    });
 
     lampHead.addEventListener("mousedown", function () {
         switchButton.style.transform = "translateY(20px)";
@@ -77,11 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
         switchButton.style.transform = "translateY(20px)";
         lampClickTime = Date.now();
     });
-    
-    lampLeg.addEventListener("mousedown", function () {
-        switchButton.style.transform = "translateY(20px)";
-        lampClickTime = Date.now();
-    });
 
     lampLeg.addEventListener("mouseup", function () {
         switchButton.style.transform = "translateY(-20px)";
@@ -89,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
             isLightOn = !isLightOn;
             if (isLightOn) {
                 cylinder.style.transition = "none";
-                rabbit.style.transition = "opacity 0.1s ease-in-out, transform 0.1s ease-in-out";
+                bird.style.transition = "opacity 0.1s ease-in-out, transform 0.1s ease-in-out";
                 light.style.opacity = "0.5";
                 witch.style.opacity = "1";
                 cylinder.style.opacity = "1";
@@ -107,28 +103,36 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    if (isRabbitUp) {
-        rabbit.style.transition = "transform 0.5s ease-in-out";
-        bird.style.transition = "transform 0.5s ease-in-out";
+    trigger.addEventListener("click", function () {
+        if (!isCurtainClicked) {
+            isCurtainClicked = true;
+            curtain.style.transition = "transform 1s ease-in-out";
+            curtain.style.transform = "translateY(-100%)";
+        }
 
-        rabbit.style.transform = "translateY(98px)";
-        setTimeout(() => {
-           bird.style.transform = "translateY(-98px)";
-            setTimeout(() => {
-                isRabbitUp = false;
-            }, 500);
-        }, 500);
-    } else {
-        rabbit.style.transition = "transform 0.5s ease-in-out";
-        bird.style.transition = "transform 0.5s ease-in-out";
+        if (isRabbitUp) {
+            rabbit.style.transition = "transform 0.5s ease-in-out";
+            bird.style.transition = "transform 0.5s ease-in-out";
 
-        bird.style.transform = "translateY(0)";
-        setTimeout(() => {
-            rabbit.style.transform = "translateY(-0)";
+            rabbit.style.transform = "translateY(98px)";
             setTimeout(() => {
-                isRabbitUp = true;
+                bird.style.transform = "translateY(-98px)";
+                setTimeout(() => {
+                    isRabbitUp = false;
+                }, 500);
             }, 500);
-        }, 500);
-    }
+        } else {
+            rabbit.style.transition = "transform 0.5s ease-in-out";
+            bird.style.transition = "transform 0.5s ease-in-out";
+
+            bird.style.transform = "translateY(0)";
+            setTimeout(() => {
+                rabbit.style.transform = "translateY(-0)";
+                setTimeout(() => {
+                    isRabbitUp = true;
+                }, 500);
+            }, 500);
+        }
+    });
+
 });
-
